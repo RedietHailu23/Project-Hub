@@ -41,9 +41,9 @@ User Authentication and Authorization
 Users need to authenticate to access project-related functionalities.
 Role-based authorization ensures that only admins have the rights to perform CRUD operations on projects.
 
+Group members Name ID
 
+Rediet Hailu UGR/2472/13
+Ayalkbet zelalem    ATR/2480/09
+Ezana kifle worku   UGR/4189/14 
 
-Group members Name     ID
-1.Rediet Hailu        UGR/2472/13
-2.Ayalkbet zelalem    ATR/2480/09
-3.ezana kifle worku   UGR/4189/14 

@@ -15,6 +15,7 @@ export class ProjectsService {
   ) {}
 
   async findAll(): Promise<Project[]> {
+    console.log("here")
     const projects = await this.projectModel.find();
     return projects;
   }

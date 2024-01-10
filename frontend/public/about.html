@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>About Us Page</title>
     <link
       href="assets/bootstrap/css/bootstrap.min.css"
       rel="stylesheet"
@@ -11,48 +11,33 @@
     <script
       src="assets/bootstrap/js/bootstrap.min.js"
     ></script>
-    <script src="dist/logout.js"></script>
+    <!-- Add this script in the head section of your HTML file -->
 
     <script>
+      // Modify the script in your projects HTML file
       document.addEventListener('DOMContentLoaded', function () {
         const isAuthenticated = localStorage.getItem('userToken');
         const projectsLinkContainer = document.querySelector('.middle');
         const projectsLink = document.getElementById('projects_link');
         const loginLink = document.getElementById('login_link');
-        const logout = document.getElementById('logout');
 
-if (isAuthenticated) {
-  logout.style.display
-  projectsLink.style.display ;
-  loginLink.style.display = 'none'; 
-} else {
-  
-  projectsLink.style.display = 'none';
-  loginLink.style.display ; 
-  logout.style.display = "none";
-}
+        if (isAuthenticated) {
+          // User is logged in, show the "Projects" link
+          projectsLink.style.display;
+          loginLink.style.display = 'none'; // Optional: hide the login link when logged in
+        } else {
+          // User is not logged in, hide the "Projects" link
+          projectsLink.style.display = 'none';
+          loginLink.style.display; // Optional: show the login link when not logged in
+        }
       });
     </script>
     <link rel="stylesheet" href="./about.css" />
-    <style>
-      .submitbutton {
-        background-color: black;
-        color: white;
-        text-align: center;
-        cursor: pointer;
-      }
-      .submitbutton a {
-        color: white;
-        text-decoration: none;
-      }
-    </style>
   </head>
   <body style="margin: 0px">
     <section class="sectionone" id="home">
       <div class="navbar">
-        <div class="left">
-          <img src="image/download.logo1.png" alt="Logo">
-        </div>
+        <div class="left"><img src="image/download.logo1.png" alt="Logo"></div>
         <div class="middle">
           <div class="links">
             <a href="index.html"> Home </a>
@@ -68,12 +53,9 @@ if (isAuthenticated) {
           </div>
         </div>
         <div class="right">
-          <button type="button" class="btn submitbutton" id="login_link">
-            <a href="login.html" style="text-decoration: none;"> Login </a>
-          </button>
-          <button type="button"
-          class="btn submitbutton" id="logout">
-              Logout</button>
+          <div class="links" id="login_link">
+            <a href="login.html"> Login </a>
+          </div>
         </div>
       </div>
     </section>

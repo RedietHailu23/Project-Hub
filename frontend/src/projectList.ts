@@ -10,16 +10,7 @@ interface Project {
 
 async function fetchProjects(): Promise<Project[]> {
   try {
-    const userToken = localStorage.getItem('userToken');
-   const headers = new Headers();
-
-   if (userToken) {
-     headers.append('Authorization', userToken);
-   }
-
-    const response = await fetch('http://localhost:3000/projects',
-     {headers: headers}
-    );
+    const response = await fetch('http://localhost:3000/projects');
     if (!response.ok) {
       throw new Error(`Failed to fetch projects: ${response.statusText}`);
     }
@@ -46,18 +37,12 @@ async function fetchProjectById(projectId: string): Promise<Project> {
 
 async function deleteProject(projectId: string): Promise<void> {
   try {
-   const userToken = localStorage.getItem('userToken');
-   const headers = new Headers();
-
-   if (userToken) {
-     headers.append('Authorization', userToken);
-   }
-
-   const response = await fetch(`http://localhost:3000/projects/${projectId}`, {
-     method: 'DELETE',
-     headers: headers,
-   });
-
+    const response = await fetch(
+      `http://localhost:3000/projects/${projectId}`,
+      {
+        method: 'DELETE',
+      },
+    );
 
     if (!response.ok) {
       throw new Error(`Failed to delete project: ${response.statusText}`);
@@ -75,20 +60,13 @@ async function updateProject(
   updatedProject: Project,
 ): Promise<void> {
   try {
-     const userToken = localStorage.getItem('userToken');
-     const headers = new Headers({
-       'Content-Type': 'application/json',
-     });
-
-     if (userToken !== null) {
-       headers.append('Authorization', userToken);
-     }
-
     const response = await fetch(
       `http://localhost:3000/projects/${projectId}`,
       {
         method: 'PUT',
-        headers: headers,
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(updatedProject),
       },
     );
@@ -104,7 +82,7 @@ async function updateProject(
   }
 }
 
-function populateProjectTable(projects: Project[]): void {
+function populateTable(projects: Project[]): void {
   const tableBody = document.querySelector(
     '.table tbody',
   ) as HTMLTableSectionElement;
@@ -125,7 +103,7 @@ function populateProjectTable(projects: Project[]): void {
         </button>
       </td>
       <td class="eachcol">
-        <button class="btn btn-danger btn-sm deleteButton">Delete</button>
+        <button class="btn btn-primary btn-sm deleteButton">Delete</button>
       </td>
     `;
 
@@ -136,7 +114,7 @@ function populateProjectTable(projects: Project[]): void {
     if (editButton) {
       editButton.addEventListener(
         'click',
-        async () => await handleProjectEditButtonClick(project),
+        async () => await handleEditButtonClick(project),
       );
     }
 
@@ -147,13 +125,13 @@ function populateProjectTable(projects: Project[]): void {
     if (deleteButton) {
       deleteButton.addEventListener(
         'click',
-        async () => await handleProjectDeleteButtonClick(project._id),
+        async () => await handleDeleteButtonClick(project._id),
       );
     }
   });
 }
 
-async function handleProjectEditButtonClick(project: Project): Promise<void> {
+async function handleEditButtonClick(project: Project): Promise<void> {
   try {
     // Fetch project data by ID
     const idInput = document.getElementById('id') as HTMLInputElement;
@@ -197,7 +175,7 @@ async function handleProjectEditButtonClick(project: Project): Promise<void> {
     const updateForm = document.getElementById('updateForm') as HTMLFormElement;
     updateForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-      await handleUpdateProject(project._id, getProjectFormData(updateForm));
+      await handleUpdateProject(project._id, getFormData(updateForm));
       modal.style.display = 'none';
     });
   } catch (error) {
@@ -206,7 +184,7 @@ async function handleProjectEditButtonClick(project: Project): Promise<void> {
 }
 
 // Helper function to extract form data
-function getProjectFormData(form: HTMLFormElement): Project {
+function getFormData(form: HTMLFormElement): Project {
   return {
     _id: (form.querySelector('#id') as HTMLInputElement).value,
     title: (form.querySelector('#title') as HTMLInputElement).value,
@@ -251,7 +229,7 @@ async function handleUpdateProject(
   }
 }
 
-async function handleProjectDeleteButtonClick(projectId: string): Promise<void> {
+async function handleDeleteButtonClick(projectId: string): Promise<void> {
   try {
     // Confirm deletion with the user (you may use window.confirm or a modal)
     const confirmDeletion = window.confirm(
@@ -278,8 +256,9 @@ async function handleProjectDeleteButtonClick(projectId: string): Promise<void> 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     const projects = await fetchProjects();
-    populateProjectTable(projects);
+    populateTable(projects);
   } catch (error) {
     console.error('Error loading project data:', error);
   }
 });
+export {};

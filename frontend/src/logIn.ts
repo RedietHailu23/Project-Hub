@@ -24,7 +24,7 @@ async function loginUser(signInUser: SigninUserData): Promise<void> {
       // Store user token and role in local storage
       localStorage.setItem('userToken', data.token);
       localStorage.setItem('userRole', data.role);
-
+console.log(data.token)
       console.log('User logged in successfully!');
       if (data.role === 'admin') {
         window.location.href = 'projectlist.html';

@@ -19,6 +19,7 @@ async function loginUser(signInUser: SigninUserData): Promise<void> {
     });
 
     if (response.ok) {
+      console.log("user found")
       const data: AuthResponse = await response.json();
 
       // Store user token and role in local storage
@@ -57,6 +58,8 @@ async function handleLogin(event: Event): Promise<void> {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+
+  console.log("here --------")
   const loginButton = document.getElementById(
     'loginButton',
   ) as HTMLButtonElement;
